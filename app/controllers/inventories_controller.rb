@@ -145,10 +145,10 @@ class InventoriesController < ApplicationController
       
       attributes = {
         verified: false,
-        ord:               row[0],
-        cbarra:            row[1],
-        tombo:             row[2],
-        ed:                row[3],
+        ord:               row[0].to_i,
+        cbarra:            row[1].to_i,
+        tombo:             row[2].to_i,
+        ed:                row[3].to_i,
         descricao:         row[4],
         responsavel:       row[5],
         sala:              row[6],
