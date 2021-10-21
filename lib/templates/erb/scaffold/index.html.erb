@@ -1,0 +1,37 @@
+<p></p>
+
+<div class="ui container">
+  <div class="ui menu"">
+    <a href="#" class="item active"><strong><%= plural_table_name.titleize %></strong></a>
+    <%%= link_to "Novo", new_<%= singular_table_name %>_path, class: 'item' %>
+  </div>
+
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <% attributes.reject(&:password_digest?).each do |attribute| -%>
+        <th><%= attribute.human_name %></th>
+        <% end -%>
+        <th width="250">Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+        <tr>
+          <% attributes.reject(&:password_digest?).each do |attribute| -%>
+          <td><%%= <%= singular_table_name %>.<%= attribute.name %> %></td>
+          <% end -%>
+          <td>
+            <div class="ui buttons">
+            <%%= link_to 'Exibir', <%= singular_table_name %>, class: 'ui blue basic button' %>
+            <%%= link_to 'Editar', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'ui blue basic button' %>
+            <%%= link_to 'Remover', <%= singular_table_name %>, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'ui red basic button' %>
+            </div>
+          </td>
+        </tr>
+      <%% end %>
+    </tbody>
+  </table>
+
+</div>

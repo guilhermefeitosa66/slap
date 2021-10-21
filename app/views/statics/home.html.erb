@@ -1,0 +1,26 @@
+<div class="ui center aligned grid container">
+  <div class="column">
+    <p style="padding-top: 5em;"></p>
+    <%= image_tag "ifpi-logo.svg", class: 'image' %>
+    <h1>Bem-vindo ao SLAP</h1>
+    <p>Sistema de Levantamento e Avaliação Patrimonial</p>
+
+    <% unless user_signed_in? %>
+      <p><%= link_to 'Login', new_user_session_path, class: 'fluid massive ui teal button' %></p>
+      <p><%= link_to 'App Android para ler Codigo de Barras', "#{root_url}zxing.apk", class: 'fluid massive ui green button', target: '_blank' %></p>
+    <% end %>
+  </div>
+</div>
+
+<div class="ui center aligned grid container">
+  <div class="column">
+    <p style="padding-top: 5em;"></p>
+    <%= image_tag "srn.svg", class: 'image' %>
+    
+    <p>
+      Desenvolvido no IFPI - Campus São Raimundo Nonato<br>
+      guilherme.feitoza@ifpi.edu.br<br>
+      <a href="https://github.com/guilhermefeitosa66/slap" target="_blank">Github</a>
+    </p>
+  </div>
+</div>

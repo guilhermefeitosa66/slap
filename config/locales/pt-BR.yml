@@ -1,0 +1,41 @@
+pt-BR:
+  hello: "Olá Mundo"
+  "yes": "sim"
+  "no": "não"
+  helpers:
+    page_entries_info:
+      more_pages:
+        display_entries: Exibindo %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> de um total de <b>%{total}</b>
+      one_page:
+        display_entries:
+          one: Exibindo <b>1</b> %{entry_name}
+          other: Exibindo <b>%{count}</b> %{entry_name}
+          zero: Nenhum %{entry_name} encontrado
+  views:
+    pagination:
+      first: "&laquo; Primeiro"
+      last: "Último &raquo;"
+      next: Próximo &rsaquo;
+      previous: "&lsaquo; Anterior"
+      truncate: "&hellip;"
+  activerecord:
+    attributes:
+      user:
+        name: "Nome"
+        email: "E-mail"
+        password: "Senha"
+        password_confirmation: "Confirmar senha"
+        admin: "Administrador"
+      inventory:
+        year: "Ano"
+        campus: "Campus"
+        file: "Arquivo"
+      item:
+        estado_conservacao: "Estado de conservação"
+        situacao_uso: "Situação de uso"
+        verified: "Verificado"
+        user: "Usuário"
+        user_id: "Usuário"
+        cbarra: "Código de barras"
+        tombo: "Tombamento"
+        sala: "Sala"

@@ -1,0 +1,26 @@
+<p></p>
+
+<div class="ui container">
+  <div class="ui menu"">
+    <a href="#" class="item active"><strong>Usuário</strong></a>
+    <%= link_to 'Novo', new_user_path, class: 'item' %>
+    <%= link_to 'Editar', edit_user_path(@user), class: 'item' %>
+    <%= link_to 'Voltar', users_path, class: 'item' %>
+  </div>
+
+  <p>
+    <strong>Nome:</strong>
+    <%= @user.name %>
+  </p>
+
+  <p>
+    <strong>E-mail:</strong>
+    <%= @user.email %>
+  </p>
+
+  <p>
+    <strong>Administrador?</strong>
+    <%= l_boolean @user.admin %>
+  </p>
+  
+</div>

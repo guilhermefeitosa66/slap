@@ -1,0 +1,11 @@
+<p></p>
+
+<div class="ui container">
+  <div class="ui menu"">
+    <a href="#" class="item active"><strong>Editando inventário</strong></a>
+    <%= link_to 'Salvar', '#', class: 'item save' %>
+    <%= link_to 'Cancelar', inventories_path, class: 'item' %>
+  </div>
+
+  <%= render 'form' %>
+</div>

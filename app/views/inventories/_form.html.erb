@@ -1,0 +1,46 @@
+<%= form_for(@inventory, html: {class: 'ui form', multipart: true}) do |f| %>
+
+  <% if @inventory.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+      <% @inventory.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div class="field">
+      <%= f.label :year %>
+    <%= f.number_field :year %>
+    </div>
+
+    <div class="field">
+      <%= f.label :campus %>
+      <%= f.select :campus, campus_list %>
+    </div>
+
+    <div class="field">
+      <%= f.label :file %>
+      <%= f.file_field :file %>
+      <i>(Ao alterar a planilha, as informações da planilha anterior serão removidos)</i>
+      <p>OBS: a planilha deve conter as respectivas colunas: <strong>ordem, cód. barras, tombo, ed, descrição, responsável, sala e valor.</strong> EXEMPLO:</p>
+      <%= image_tag "exemplo-planilha.png", class: 'image' %>
+    </div>
+
+    <div class="field">
+      <%= f.label 'Membros da comissão' %>
+      <%= f.select :user_ids, User.where(admin: false).collect {|x| [x.email, x.id]}, {prompt: 'Selecionar departamentos'}, multiple: true, class: "ui search dropdown" %>
+      <i>(Selecione os membros que farão parte da comissão de inventário)</i>
+    </div>
+
+  <% end %>
+
+<script type="text/javascript">
+  $('.save').click(function(){
+    $('form').submit();
+  });
+
+  $('.ui.search.dropdown').dropdown({ allowLabels:true});
+</script>
+

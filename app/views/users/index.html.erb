@@ -1,0 +1,35 @@
+<p></p>
+
+<div class="ui container">
+  <div class="ui menu"">
+    <a href="#" class="item active"><strong>Usuários</strong></a>
+    <%= link_to "Novo", new_user_path, class: 'item' %>
+  </div>
+
+  <table class="ui celled very compact table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Administrador</th>
+        <th width="250">Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= l_boolean user.admin %></td>
+          <td>
+            <%= link_to 'Exibir', user, class: 'ui mini blue button' %>
+            <%= link_to 'Editar', edit_user_path(user), class: 'ui mini blue button' %>
+            <%= link_to 'Remover', user, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'ui mini red button' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>

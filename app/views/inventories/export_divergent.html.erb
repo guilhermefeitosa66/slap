@@ -1,0 +1,66 @@
+<p></p>
+<div class="ui container">
+    <button class="ui primary button" id="print">
+        <i class="icon print"></i>
+        Imprimir
+    </button>
+</div>
+
+<div class="ui container" id="print-area">
+  <h1>Relatório de transferência patrimonial</h1>
+
+  <div class="ui segment">
+    <h3>Total de itens: <%= @items.count %></h3>
+  </div>
+
+      <% @items.each do |i| %>
+        <% if i.sala != i.sala_atual || i.responsavel != i.responsavel_atual %>
+  <table class="ui celled very compact table" border='1' cellspacing='0' cellpadding='5' bordercorlor='black' width='100%'>
+    <tbody>
+            <tr bgcolor="#ddd">
+                <td><strong>Item:</strong> <%= i.ord %></td>
+                <td><strong>Cod. Barras:</strong> <%= i.cbarra %></td>
+                <td><strong>Tombo:</strong> <%= i.tombo %></td>
+                <td><strong>Descrição:</strong> <%= i.descricao %></td>
+            </tr>
+
+            <tr>
+                <td colspan="4">
+                    <% if i.sala != i.sala_atual %>
+                        <p><strong>DO LOCAL:</strong> <%= i.sala %> <br>
+                        <strong>PARA:</strong> <%= i.sala_atual %></p>
+                    <% end %>
+
+                    <% if i.responsavel != i.responsavel_atual %>
+                        <p><strong>DE:</strong> <%= i.responsavel %> <br>
+                        <strong>PARA:</strong> <%= i.responsavel_atual %></p>
+                    <% end %>
+                </td>
+            </tr>            
+    </tbody>
+  </table>
+  <p></p>
+        <% end %>
+      <% end %>
+</div>
+
+<p style="padding-top: 1em;"></p>
+
+<script>
+    button = document.getElementById("print"); 
+
+    button.addEventListener('click', event => {
+        table = document.getElementById("print-area");
+        result = "";
+        result = '' + table.innerHTML;
+
+        w = window.open('','','width=800, height=600');
+
+        w.document.open().write(result);
+
+        w.print();
+
+        w.close();
+    });
+
+</script>

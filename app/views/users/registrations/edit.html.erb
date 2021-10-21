@@ -1,0 +1,48 @@
+<p></p>
+<div class="ui container">
+  <div class="ui menu"">
+    <a href="#" class="item active"><strong>Alteração dos dados da sua conta</strong></a>
+    <%= link_to 'Salvar', '#', class: 'item save' %>
+    <%= link_to 'Cancelar', root_path, class: 'item' %>
+  </div>
+
+  <div class="ui grid">
+    <div class="row">
+      <div class="sixteen wide tablet eight wide computer column">
+
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'ui form' }) do |f| %>
+        <%= devise_error_messages! %>
+
+        <div class="field">
+          <%= f.email_field :email, placeholder: 'Email', autofocus: true %>
+        </div>
+
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+        <% end %>
+
+        <div class="field">
+          <i>Deixe em branco, caso não queira alterar sua senha</i>
+          <%= f.password_field :password, placeholder: 'Digite sua nova senha', autocomplete: "off" %>
+        </div>
+
+        <div class="field">
+          <%= f.password_field :password_confirmation, placeholder: 'Confirmar nova senha', autocomplete: "off" %>
+        </div>
+
+        <div class="field">
+          <i>Precisamos que digite sua senha atual para confirmar as alterações</i>
+          <%= f.password_field :current_password, placeholder: 'Digite sua senha atual', autocomplete: "off" %>
+        </div>
+      <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('.save').click(function(){
+    $('form').submit();
+  });
+</script>

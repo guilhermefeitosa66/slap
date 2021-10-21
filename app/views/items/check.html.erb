@@ -1,0 +1,216 @@
+<script type="text/javascript">
+    //This entire block of script should be in a separate file, and included in each doc in which you want scanner capabilities
+  function zxinglistener(e)
+  {
+    localStorage["zxingbarcode"] = "";
+
+    if(e.url.split("\#")[0] == window.location.href)
+    {
+      window.focus();
+      processBarcode(decodeURIComponent(e.newValue));
+    }
+
+    window.removeEventListener("storage", zxinglistener, false);
+  }
+
+  if(window.location.hash != "")
+  {
+    localStorage["zxingbarcode"] = window.location.hash.substr(1);
+    self.close();
+    window.location.href="about:blank";//In case self.close is disabled
+  }else{
+    window.addEventListener("hashchange", function(e)
+    {
+      window.removeEventListener("storage", zxinglistener, false);
+      var hash = window.location.hash.substr(1);
+      
+      if (hash != "")
+      {
+        window.location.hash = "";
+        processBarcode(decodeURIComponent(hash));
+      }
+    }, false);
+  }
+
+  function getScan(event)
+  {
+    //event.preventDefault();
+    var href = window.location.href.split("\#")[0];
+    window.addEventListener("storage", zxinglistener, false);
+    //zxingWindow = window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#{CODE}"));
+    zxingWindow = window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#{CODE}"),'_self');
+  }
+
+  function processBarcode(b)
+  {
+    $("#item_cbarra").val(b);
+    $("#new_item").submit();
+  }
+</script>
+
+
+<div class="ui container" style="padding-top: 1em; padding-bottom: 1em;">
+  <div class="ui grid container">
+    <div class="sixteen wide mobile eight wide computer column">
+      <p>
+        <%= link_to room_path(params[:id]), class: 'ui default button' do %><i class="exchange icon"></i> Trocar de sala<% end %>
+        <%= link_to items_room_list_path(room: session[:sala], id: params[:id]), class: 'ui default button', target: '_blank' do %><i class="list layout icon"></i>Listar itens da sala<% end %>
+        <%= link_to history_path(params[:id]), class: 'ui default button', target: '_blank' do %><i class="list layout icon"></i> Histórico<% end %>
+      </p>
+
+      <div class="ui segment">
+        <p>SALA: <%= session[:sala] %></p>
+      </div>
+
+      <%= form_for Item.new(session[:item_status]), url: check_path, method: 'get', html: {class: 'ui massive form'} do |f| %>
+        <div class="field">
+          <div class="ui segment mobile only grid">
+            <p onclick="getScan()" class="ui fluid massive green icon button"><i class="barcode icon"></i></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= f.number_field :cbarra, placeholder: 'CÓDIGO DE BARRAS', autofocus: true, autocomplete: 'off' %>
+        </div>
+
+        <div class="field">
+          <%= f.number_field :tombo, placeholder: 'TOMBO', class: 'fluid', autocomplete: 'off' %>
+        </div>
+
+        <div class="field">
+          <label>Selecione o responsável:</label>
+          <%= f.collection_select :responsavel_atual, Item.select(:responsavel).uniq.order(responsavel: :asc), :responsavel, :responsavel, {include_blank: 'Não Alterar Responsável'}, {class: 'ui search dropdown', placeholder: 'Selecione o responsável'} %>
+        </div>
+
+        <div class="field">
+          <%= f.label :estado_conservacao %>
+          <%= f.select :estado_conservacao, [['bom', 'bom'], ['regular', 'regular'], ['ruim', 'ruim']] %>
+        </div>
+
+        <div class="field">
+          <%= f.label :situacao_uso %>
+          <%= f.select :situacao_uso, [['ativo', 'ativo'], ['ocioso', 'ocioso'], ['inserv.', 'inserv.']] %>
+        </div>
+
+        <div class="field">
+          <%= f.button type: 'submit', class: 'fluid massive ui primary button' do %><i class="save icon"></i> Confirmar<% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="sixteen wide mobile eight wide computer column">
+      <% if !@item.nil? %>
+        
+        <% if @verified %>
+          <div class="ui orange inverted segment">
+            <h1>O item já foi verificador por: <%= @item.user.name %></h1>
+            <h3>Deseja modificar esse item?</h3>
+          </div>
+
+
+          <%= form_for Item.new(session[:item_status]), url: check_path, method: 'get', html: {class: 'ui massive form'} do |f| %>
+            <div class="field">
+              <div class="ui segment mobile only grid">
+                <p onclick="getScan()" class="ui fluid massive green icon button"><i class="barcode icon"></i></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <%= f.hidden_field :cbarra, value: @item.cbarra %>
+              <%= f.hidden_field :tombo, value: @item.tombo %>
+              <%= f.hidden_field :responsavel_atual %>
+              <%= f.hidden_field :estado_conservacao %>
+              <%= f.hidden_field :situacao_uso %>
+              <%= f.hidden_field :change, value: true %>
+            </div>
+
+            <div class="field">
+              <%= f.button type: 'submit', class: 'fluid massive ui orange button' do %><i class="save icon"></i> Modificar<% end %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="ui green inverted segment">
+            <h1>Item alterado com sucesso</h1>
+          </div>
+        <% end %>
+
+        <table class="ui very compact celled table">
+          <tr>
+            <td><strong>ORD</strong></td>
+            <td><%= @item.ord %></td>
+          </tr>
+
+          <tr>
+            <td><strong>COD. BARRAS</strong></td>
+            <td><%= @item.cbarra %></td>
+          </tr>
+
+          <tr>
+            <td><strong>TOMBO</strong></td>
+            <td><%= @item.tombo %></td>
+          </tr>
+
+          <tr>
+            <td><strong>ED</strong></td>
+            <td><%= @item.ed %></td>
+          </tr>
+
+          <tr>
+            <td><strong>DESCRIÇÃO</strong></td>
+            <td><%= @item.descricao %></td>
+          </tr>
+
+          <tr>
+            <td><strong>RESPONSAVEL ANTIGO:</strong></td>
+            <td><%= @item.responsavel %></td>
+          </tr>
+
+          <tr>
+            <td><strong>SALA ANTIGA:</strong></td>
+            <td><%= @item.sala %></td>
+          </tr>
+
+          <tr class="positive">
+            <td><strong>SALA ATUAL:</strong></td>
+            <td><%= @item.sala_atual %></td>
+          </tr>
+
+          <tr class="positive">
+            <td><strong>RESPONSÁVEL ATUAL:</strong></td>
+            <td><%= @item.responsavel_atual %></td>
+          </tr>
+
+          <tr>
+            <td><strong>VALOR:</strong></td>
+            <td><%= @item.valor %></td>
+          </tr>
+        </table>
+
+        <% if @verified %>
+          <script type="text/javascript">
+            var snd = new Audio("<%= root_url %>alert.wav");
+            snd.play();
+          </script>
+        <% else %>
+          <script type="text/javascript">
+            var snd = new Audio("<%= root_url %>success-2.wav");
+            snd.play();
+          </script>
+        <% end %>
+
+      <% else %>
+        <% unless params[:first] %>
+          <div class="ui red inverted segment">
+            <h1>Item não localizado!</h1>
+          </div>
+
+          <script type="text/javascript">
+            var snd = new Audio("<%= root_url %>error.wav");
+            snd.play();
+          </script>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+

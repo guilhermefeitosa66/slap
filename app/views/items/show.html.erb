@@ -1,0 +1,76 @@
+<p></p>
+
+<div class="ui container">
+  <div class="ui menu"">
+    <a href="#" class="item active"><strong>Item</strong></a>
+    <%= link_to 'Novo', new_item_path, class: 'item' %>
+    <%= link_to 'Editar', edit_item_path(@item), class: 'item' %>
+    <%= link_to 'Voltar', items_path, class: 'item' %>
+  </div>
+
+    <p>
+    <strong>User:</strong>
+    <%= @item.user %>
+  </p>
+    <p>
+    <strong>Inventory:</strong>
+    <%= @item.inventory %>
+  </p>
+    <p>
+    <strong>Verified:</strong>
+    <%= @item.verified %>
+  </p>
+    <p>
+    <strong>Estado conservacao:</strong>
+    <%= @item.estado_conservacao %>
+  </p>
+    <p>
+    <strong>Situacao uso:</strong>
+    <%= @item.situacao_uso %>
+  </p>
+    <p>
+    <strong>Sala atual:</strong>
+    <%= @item.sala_atual %>
+  </p>
+    <p>
+    <strong>Responsavel atual:</strong>
+    <%= @item.responsavel_atual %>
+  </p>
+    <p>
+    <strong>Ord:</strong>
+    <%= @item.ord %>
+  </p>
+    <p>
+    <strong>Cbarra:</strong>
+    <%= @item.cbarra %>
+  </p>
+    <p>
+    <strong>Tombo:</strong>
+    <%= @item.tombo %>
+  </p>
+    <p>
+    <strong>Ed:</strong>
+    <%= @item.ed %>
+  </p>
+    <p>
+    <strong>Descricao:</strong>
+    <%= @item.descricao %>
+  </p>
+    <p>
+    <strong>Responsavel:</strong>
+    <%= @item.responsavel %>
+  </p>
+    <p>
+    <strong>Sala:</strong>
+    <%= @item.sala %>
+  </p>
+    <p>
+    <strong>Valor:</strong>
+    <%= @item.valor %>
+  </p>
+    <p>
+    <strong>Campus:</strong>
+    <%= @item.campus %>
+  </p>
+  
+</div>

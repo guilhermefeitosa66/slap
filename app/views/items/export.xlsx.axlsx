@@ -1,0 +1,10 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "inventario") do |sheet|
+
+  sheet.add_row ["ord", "cbarra", "tombo", "ed", "descricao", "bom", "reg", "ruim", "ativo", "ocioso", "inserv", "responsavel", "responsavel_atual", "valor", "sala", "sala_atual"]
+
+  @data.each do |i|
+    sheet.add_row [i.ord, i.cbarra, i.tombo, i.ed, i.descricao, bool_to_s(i.bom), bool_to_s(i.reg), bool_to_s(i.ruim), bool_to_s(i.ativo), bool_to_s(i.ocioso), bool_to_s(i.inserv), i.responsavel, i.responsavel_atual, i.valor, i.sala, i.sala_atual]
+  end
+end

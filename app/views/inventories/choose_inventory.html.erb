@@ -1,0 +1,37 @@
+<p></p>
+
+<div class="ui container">
+ 
+
+  <table class="ui celled very compact table">
+    <thead>
+      <tr>
+        <th>Inventários</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @inventories.each do |inventory| %>
+        <tr>
+          <td>
+            <p><%= link_to "#{inventory.campus}-#{inventory.year}", room_path(inventory.id) %></p>
+
+            <div class="ui teal progress" data-percent="<%= inventory.progress %>">
+              <div class="bar"></div>
+              <div class="label">
+                <%= inventory.progress %>%
+              </div>
+            </div>
+
+            <%= inventory.remaining %>
+          </td> 
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+
+<script type="text/javascript">
+  $('.progress').progress();
+</script>

@@ -1,0 +1,112 @@
+<p></p>
+
+<div class="ui container">
+  <div class="ui menu"">
+    <a href="#" class="item active"><strong>Inventário</strong></a>
+    <%= link_to 'Novo', new_inventory_path, class: 'item' %>
+    <%= link_to 'Editar', edit_inventory_path(@inventory), class: 'item' %>
+    <%= link_to 'Voltar', inventories_path, class: 'item' %>
+  </div>
+
+  <p>
+    <strong>Ano:</strong>
+    <%= @inventory.year %>
+  </p>
+
+  <p>
+    <strong>Campus:</strong>
+    <%= @inventory.campus %>
+  </p>
+
+  <p>
+    <strong>Arquivo:</strong>
+    <%= link_to 'Baixar planilha anexada', @inventory.file_url %>
+  </p>
+
+  <p><strong>Membros da comissão de inventário:</strong></p>
+  <ul>
+    <% @inventory.users.each do |user| %>
+    <li><%= user.name %> - <%= user.email %></li>
+    <% end %>
+  </ul>
+
+  <div class="ui menu"">
+    
+    <%= form_for Item.new(session[:filter]), url: @inventory, method: 'get', html: {class: 'ui form item'} do |f| %>
+      <div class="four fields">
+        <div class="field">
+          <label>Sala:</label>
+          <%= f.collection_select :sala, Item.select(:sala).where(inventory_id: @inventory).uniq.order(sala: :asc), :sala, :sala, {include_blank: 'Todas as salas'}, {class: ''} %>
+        </div>
+
+        <div class="field">
+          <label>Satus do Item:</label>
+          <%= f.select :verified, [['todos', ''], ['verificados', true], ['não verificados', false]] %>
+        </div>
+
+        <div class="field">
+          <label>Número de itens exibidos:</label>
+          <%= f.select :per_page, [[10, 10], [20, 20], [30, 30], [40, 40], [50, 50], ['Todos', 999999999]] %>
+        </div>
+
+        <div class="field">
+          <label><br></label>
+          <%= f.button type: 'submit', class: 'fluid ui primary button' do %><i class="filter icon"></i> Filtrar<% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= paginate @items, window: 2 %>
+
+  <table class="ui celled very compact table">
+    <thead>
+      <tr>
+        <th>Ordem</th>
+        <th>Cód. barras</th>
+        <th>Tombo</th>
+        <th>Ed</th>
+        <th>Descrição</th>
+        <th>Responsável</th>
+        <th>Sala</th>
+        <th>Valor</th>
+        <th>Estado conservação</th>
+        <th>Situação uso</th>
+        <th>Sala atual</th>
+        <th>Verificado por</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @items.each do |item| %>
+        <tr class="<%= 'positive' if item.verified %>">
+          <td><%= item.ord %></td>
+          <td><%= item.cbarra %></td>
+          <td><%= item.tombo %></td>
+          <td><%= item.ed %></td>
+          <td><%= item.descricao %></td>
+          <td><%= item.responsavel %></td>
+          <td><%= item.sala %></td>
+          <td><%= item.valor %></td>
+          <td><%= item.estado_conservacao %></td>
+          <td><%= item.situacao_uso %></td>
+          <td><%= item.sala_atual %></td>
+          <td>
+            <% if item.user %>
+              <%= item.user.name %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @items, window: 2 %>
+
+  <div class="ui segment">
+    <h3>Total de itens: <%= @items.count %></h3>
+  </div>
+  
+</div>
+
+<p style="padding-top: 1em;"></p>

@@ -1,0 +1,52 @@
+<p></p>
+
+<div class="ui container">
+  <h1>SALA: <%= session[:sala] %></h1>
+
+  <div class="ui segment">
+    <p>TOTAL DE ITENS: <%= @items.count %></p>
+    <p>TOTAL DE VERIFICADOS: <%= @items.where(verified: true).count %></p>
+    <p>TOTAL DE NÃO VERIFICADOS: <%= @items.where(verified: false).count %></p>
+  </div>
+
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <th>Ordem</th>
+        <th>Cód. barras</th>
+        <th>Tombo</th>
+        <th>Ed</th>
+        <th>Descrição</th>
+        <th>Responsável antigo</th>
+        <th>Valor</th>
+
+        <th>Sala atual</th>
+        <th>Responsavel atual</th>
+        <th>Status</th>
+        <th>Verificado por</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @items.each do |item| %>
+        <tr class="<%= 'positive' if item.verified %>">
+          <td><%= item.ord %></td>
+          <td><%= item.cbarra %></td>
+          <td><%= item.tombo %></td>
+          <td><%= item.ed %></td>
+          <td><%= item.descricao %></td>
+          <td><%= item.responsavel %></td>
+          <td><%= item.valor %></td>
+
+          <td><%= item.sala_atual %></td>
+          <td><%= item.responsavel_atual %></td>
+          <td>
+            <%= item.estado_conservacao %> - <%= item.situacao_uso %>
+          </td>
+          <td><%= item.user.name unless item.user.nil? %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>

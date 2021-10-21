@@ -1,0 +1,101 @@
+<%= form_for(@item, html: {class: 'ui form'}) do |f| %>
+
+  <% if @item.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+      <% @item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div class="field">
+      <%= f.label :user_id %>
+    <%= f.text_field :user_id %>
+    </div>
+
+    <div class="field">
+      <%= f.label :inventory_id %>
+    <%= f.text_field :inventory_id %>
+    </div>
+
+    <div class="field">
+      <%= f.label :verified %>
+    <%= f.check_box :verified %>
+    </div>
+
+    <div class="field">
+      <%= f.label :estado_conservacao %>
+    <%= f.text_field :estado_conservacao %>
+    </div>
+
+    <div class="field">
+      <%= f.label :situacao_uso %>
+    <%= f.text_field :situacao_uso %>
+    </div>
+
+    <div class="field">
+      <%= f.label :sala_atual %>
+    <%= f.text_field :sala_atual %>
+    </div>
+
+    <div class="field">
+      <%= f.label :responsavel_atual %>
+    <%= f.text_field :responsavel_atual %>
+    </div>
+
+    <div class="field">
+      <%= f.label :ord %>
+    <%= f.number_field :ord %>
+    </div>
+
+    <div class="field">
+      <%= f.label :cbarra %>
+    <%= f.number_field :cbarra %>
+    </div>
+
+    <div class="field">
+      <%= f.label :tombo %>
+    <%= f.number_field :tombo %>
+    </div>
+
+    <div class="field">
+      <%= f.label :ed %>
+    <%= f.text_field :ed %>
+    </div>
+
+    <div class="field">
+      <%= f.label :descricao %>
+    <%= f.text_area :descricao %>
+    </div>
+
+    <div class="field">
+      <%= f.label :responsavel %>
+    <%= f.text_field :responsavel %>
+    </div>
+
+    <div class="field">
+      <%= f.label :sala %>
+    <%= f.text_field :sala %>
+    </div>
+
+    <div class="field">
+      <%= f.label :valor %>
+    <%= f.text_field :valor %>
+    </div>
+
+    <div class="field">
+      <%= f.label :campus %>
+    <%= f.text_field :campus %>
+    </div>
+
+  <% end %>
+
+<script type="text/javascript">
+  $('.save').click(function(){
+    $('form').submit();
+  });
+
+  $('.ui.search.dropdown').dropdown({ allowLabels:true});
+</script>

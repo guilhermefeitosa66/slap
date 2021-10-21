@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inventario</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<% if user_signed_in? %>
+<div class="ui inverted top fixed menu">
+  <% unless current_user.admin %>
+  <div class="left menu">
+    <%= link_to root_path, class: 'item' do %>
+    <i class="home icon"></i>
+    Inicio
+    <% end %>
+  </div>
+  <% end %>
+
+  <div class="right menu">
+    <div class="ui dropdown item">
+      <i class="user icon"></i> 
+      <%= current_user.name %>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        <%= link_to edit_user_registration_path, class: 'item' do %>
+        <i class="write icon"></i>
+        Editar perfil
+        <% end %>
+
+        <%= link_to destroy_user_session_path, method: :delete, class: 'item' do %>
+        <i class="sign out icon"></i>
+        Sair
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if current_user.admin %>
+<div class="ui vertical inverted left visible sidebar menu overlay labeled icon">
+  <%= link_to root_path, class: 'item' do %>
+  <i class="home icon"></i>
+  Inicio
+  <% end %>
+
+  
+  <%= link_to users_path, class: 'item' do %>
+  <i class="users icon"></i>
+  Usuários
+  <% end %>
+
+  <%= link_to inventories_path, class: 'item' do %>
+  <i class="book icon"></i>
+  Inventário
+  <% end %>
+
+</div>
+<% end %>
+<% end %>
+
+<% if user_signed_in? %>
+  <div class="pusher" style="padding-left: 0em;">
+    <% if notice %>
+    <div class="ui container">
+      <p></p>
+      <div class="ui message">
+        <i class="close icon"></i>
+        <div class="header">
+          Notificação!
+        </div>
+        <p><%= notice %></p>
+      </div>
+    </div>
+    <% end %>
+
+    <% if alert %>
+    <div class="ui warning container">
+      <p></p>
+      <div class="ui message">
+        <i class="close icon"></i>
+        <div class="header">
+          Alerta!
+        </div>
+        <p><%= alert %></p>
+      </div>
+    </div>
+    <% end %>
+
+    <% if flash[:success] %>
+    <div class="ui positive container">
+      <p></p>
+      <div class="ui message">
+        <i class="close icon"></i>
+        <div class="header">
+          Sucesso!
+        </div>
+        <p><%= flash[:success] %></p>
+      </div>
+    </div>
+    <% end %>
+
+    <%= yield %>
+  </div>
+<% else %>
+  <% if notice %>
+  <div class="ui container">
+    <p></p>
+    <div class="ui message">
+      <i class="close icon"></i>
+      <div class="header">
+        Notificação!
+      </div>
+      <p><%= notice %></p>
+    </div>
+  </div>
+  <% end %>
+
+  <% if alert %>
+  <div class="ui warning container">
+    <p></p>
+    <div class="ui message">
+      <i class="close icon"></i>
+      <div class="header">
+        Alerta!
+      </div>
+      <p><%= alert %></p>
+    </div>
+  </div>
+  <% end %>
+
+  <% if flash[:success] %>
+  <div class="ui container">
+    <p></p>
+    <div class="ui positive message">
+      <i class="close icon"></i>
+      <div class="header">
+        Sucesso!
+      </div>
+      <p><%= flash[:success] %></p>
+    </div>
+  </div>
+  <% end %>
+  
+
+  <%= yield %>
+
+  <%= render 'layouts/footer' %>
+<% end %>
+
+<script type="text/javascript">
+  $('.message .close')
+  .on('click', function() {
+    $(this)
+      .closest('.message')
+      .transition('fade');
+  });
+
+  $('.ui.dropdown').dropdown();
+  
+  $('.ui.search.dropdown').dropdown({ allowLabels:true});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+<p></p>
+
+<div class="ui container">
+  <div class="ui menu"">
+    <a href="#" class="item active"><strong>Editando <%= singular_table_name %></strong></a>
+    <%%= link_to 'Salvar', '#', class: 'item save' %>
+    <%%= link_to 'Cancelar', <%= index_helper %>_path, class: 'item' %>
+  </div>
+
+  <%%= render 'form' %>
+</div>

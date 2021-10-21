@@ -1,0 +1,26 @@
+<div class="ui container" style="padding-top: 1em;">
+  <div class="ui segment">
+    <h1><%= @inventory.campus %>-<%= @inventory.year %></h1>
+  </div>
+
+  <%= form_for Item.new, url: check_path(@inventory.id), method: 'get', html: {class: 'ui massive form'} do |f| %>
+    
+
+    <div class="field">
+      <label>Escolha uma sala:</label>
+      <%= f.collection_select :sala, Item.select(:sala).where(inventory_id: params[:id]).uniq.order(sala: :asc), :sala, :sala, {}, {class: 'ui search dropdown', placeholder: 'Escolha uma sala'} %>
+    </div>
+
+    <div class="field">
+      <%# link_to 'Ativar Alerta Sonora (Chrome)', "chrome://flags/#disable-gesture-requirement-for-media-playback", class: 'fluid massive ui orange button' %>
+      <!-- <p>chrome://flags/#disable-gesture-requirement-for-media-playback</p> -->
+
+      <%= hidden_field_tag :first, true %>
+    </div>
+
+    <div class="field">
+      <%= f.submit "Iniciar Levantamento Patrimonial", class: 'fluid massive ui teal button' %>
+    </div>
+      
+  <% end %>
+</div>

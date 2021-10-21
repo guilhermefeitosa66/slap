@@ -1,0 +1,63 @@
+<p></p>
+
+<div class="ui container">
+  <div class="ui menu"">
+    <a href="#" class="item active"><strong>Items</strong></a>
+    <%= link_to "Novo", new_item_path, class: 'item' %>
+  </div>
+
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Inventory</th>
+        <th>Verified</th>
+        <th>Estado conservacao</th>
+        <th>Situacao uso</th>
+        <th>Sala atual</th>
+        <th>Responsavel atual</th>
+        <th>Ord</th>
+        <th>Cbarra</th>
+        <th>Tombo</th>
+        <th>Ed</th>
+        <th>Descricao</th>
+        <th>Responsavel</th>
+        <th>Sala</th>
+        <th>Valor</th>
+        <th>Campus</th>
+        <th width="250">Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <td><%= item.user %></td>
+          <td><%= item.inventory %></td>
+          <td><%= item.verified %></td>
+          <td><%= item.estado_conservacao %></td>
+          <td><%= item.situacao_uso %></td>
+          <td><%= item.sala_atual %></td>
+          <td><%= item.responsavel_atual %></td>
+          <td><%= item.ord %></td>
+          <td><%= item.cbarra %></td>
+          <td><%= item.tombo %></td>
+          <td><%= item.ed %></td>
+          <td><%= item.descricao %></td>
+          <td><%= item.responsavel %></td>
+          <td><%= item.sala %></td>
+          <td><%= item.valor %></td>
+          <td><%= item.campus %></td>
+          <td>
+            <div class="ui buttons">
+            <%= link_to 'Exibir', item, class: 'ui blue basic button' %>
+            <%= link_to 'Editar', edit_item_path(item), class: 'ui blue basic button' %>
+            <%= link_to 'Remover', item, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'ui red basic button' %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>

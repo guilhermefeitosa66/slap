@@ -1,0 +1,73 @@
+<p></p>
+
+<div class="ui container">
+  <div class="ui segment">
+    <h3>Histórico dos itens verificados</h3>
+  </div>
+
+  <div class="ui menu"">    
+    <%= form_for Item.new(session[:filter]), url: history_path(@inventory), method: 'get', html: {class: 'ui form item'} do |f| %>
+      <div class="one fields">
+        <div class="field">
+          <label>Número de itens exibidos:</label>
+          <%= f.select :per_page, [[10, 10], [20, 20], [30, 30], [40, 40], [50, 50], ['Todos', 999999999]] %>
+        </div>
+
+        <div class="field">
+          <label><br></label>
+          <%= f.button type: 'submit', class: 'fluid ui primary button' do %><i class="refresh icon"></i> Atualizar<% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <table class="ui celled very compact striped table">
+    <thead>
+      <tr>
+        <th>Ordem</th>
+        <th>Cód. barras</th>
+        <th>Tombo</th>
+        <th>Ed</th>
+        <th>Descrição</th>
+        <th>Responsável</th>
+        <th>Sala</th>
+        <th>Valor</th>
+        <th>Estado conservação</th>
+        <th>Situação uso</th>
+        <th>Sala atual</th>
+        <th>Verificado por</th>
+        <th>Desfazer</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <td><%= item.ord %></td>
+          <td><%= item.cbarra %></td>
+          <td><%= item.tombo %></td>
+          <td><%= item.ed %></td>
+          <td><%= item.descricao %></td>
+          <td><%= item.responsavel %></td>
+          <td><%= item.sala %></td>
+          <td><%= item.valor %></td>
+          <td><%= item.estado_conservacao %></td>
+          <td><%= item.situacao_uso %></td>
+          <td><%= item.sala_atual %></td>
+          <td>
+            <% if item.user %>
+              <%= item.user.name %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to undo_path(item.id), data: { confirm: 'Você tem certeza?' }, title: 'Desfazer verificação', class: 'ui icon button' do %><i class="undo icon"></i><% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @items, window: 2 %>  
+</div>
+
+<p style="padding-top: 1em;"></p>
