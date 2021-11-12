@@ -1,0 +1,42 @@
+## SQLite version 3.x
+
+# default: &default
+#   adapter: sqlite3
+#   pool: 5
+#   timeout: 5000
+
+# development:
+#   <<: *default
+#   database: db/development.sqlite3
+
+# test:
+#   <<: *default
+#   database: db/test.sqlite3
+
+# production:
+#   <<: *default
+#   database: db/production.sqlite3
+
+## ---------------------------------------
+
+## postgresql settings
+
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  username: postgres
+  password: postgres
+  host: db
+
+development:
+  <<: *default
+  database: inventario_dev
+
+test:
+  <<: *default
+  database: inventario_test
+
+production:
+  <<: *default
+  database: inventario_prod

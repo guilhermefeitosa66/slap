@@ -17,6 +17,6 @@
 !/log/.keep
 /tmp
 /public/uploads
-/config/database.yml
+# /config/database.yml
 
 /postgres/
