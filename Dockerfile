@@ -1,4 +1,4 @@
-FROM ruby:2.6.6
+FROM ruby:2.5.9
 
 LABEL version="1.0"
 LABEL description="Aplicação Ruby on Rails para levantamento e avaliação patrimonial"
