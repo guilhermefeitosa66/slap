@@ -27,7 +27,7 @@ default: &default
   pool: 5
   username: postgres
   password: postgres
-  host: db-ako8cggk088wwgww4o40okw4
+  host: db
 
 development:
   <<: *default
@@ -38,5 +38,7 @@ test:
   database: inventario_test
 
 production:
-  <<: *default
-  database: inventario_prod
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  url: <%= ENV['DATABASE_URL'] %>
